@@ -2,6 +2,7 @@ package com.kpanda.shop.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,14 +35,20 @@ public class ItemController
             return "redirect:/list";
         }
     }
-    @DeleteMapping("/item")
+    @DeleteMapping("/item/{abc}")
     ResponseEntity<String> deleteItem(@RequestParam Long id) {
         itemRepository.deleteById(id);
         return ResponseEntity.status(200).body("삭제완료");
     }
+    //패쓰워드 해싱기능
+    @GetMapping("/test2")
+    String hashing(){
+        var result = new BCryptPasswordEncoder().encode("문자....");
+        System.out.println(result);
+        return "redirect:/list";
+    }
 
-    @PostMapping("/edit")
-    String editItem(Long id ,String title, Integer price){
+    @PostMapping("/edit") String editItem(Long id ,String title, Integer price){
 
         Item item = new Item();
         item.setId(id);
