@@ -13,7 +13,7 @@ public class BasicController {
     @GetMapping("/")
     @ResponseBody
     String test(){
-        return "index.html";
+        return "list.html";
     }
 
     @GetMapping("/about")

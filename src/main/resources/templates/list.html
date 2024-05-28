@@ -12,7 +12,9 @@
         <div>
             <h4 th:text="${i.title}"></h4>
             <p th:text="${i.price + '원'}"></p>
+            <a th:href="@{'/edit/'+${i.id}}">✏️</a>
         </div>
     </div>
+
 </body>
 </html>
