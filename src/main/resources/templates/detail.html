@@ -15,6 +15,14 @@
     <h4 th:text="${item.title}"></h4>
     <p th:text="${item.price + '원'}"></p>
     <a th:href="@{'/edit/'+${item.id}}">✏️</a>
+    <span th:onclick="fetch('/item?id=[[${item.id}]]', {method : 'DELETE'})
+                .then(r => r.text())
+                .then((a) => {
+                    console.log(a);
+                    location.reload();
+                })
+                " style="cursor: pointer">🗑️
+     </span>
 </div>
 
 </body>

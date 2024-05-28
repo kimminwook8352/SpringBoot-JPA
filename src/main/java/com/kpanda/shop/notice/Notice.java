@@ -1,4 +1,4 @@
-package com.kpanda.shop;
+package com.kpanda.shop.notice;
 
 import jakarta.persistence.*;
 import lombok.ToString;

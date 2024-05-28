@@ -1,4 +1,4 @@
-package com.kpanda.shop;
+package com.kpanda.shop.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

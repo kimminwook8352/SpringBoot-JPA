@@ -1,6 +1,7 @@
-package com.kpanda.shop;
+package com.kpanda.shop.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,11 @@ public class ItemController
             return "redirect:/list";
         }
     }
+    @DeleteMapping("/item")
+    ResponseEntity<String> deleteItem(@RequestParam Long id) {
+        itemRepository.deleteById(id);
+        return ResponseEntity.status(200).body("삭제완료");
+    }
 
     @PostMapping("/edit")
     String editItem(Long id ,String title, Integer price){
@@ -42,6 +48,12 @@ public class ItemController
         item.setTitle(title);
         item.setPrice(price);
         itemRepository.save(item);
+        return "redirect:/list";
+    }
+
+    @PostMapping("/test1")
+    String test1(@RequestBody String name) {
+        System.out.println(name);
         return "redirect:/list";
     }
 

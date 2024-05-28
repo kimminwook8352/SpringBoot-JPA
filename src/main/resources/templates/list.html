@@ -7,14 +7,22 @@
 </head>
 <body>
     <div th:replace ="~{ nav.html::navbar }"></div>
-    <div class="card" th:each="i: ${items}" th:onclick="| location.href= '/detail/' + ${i.id} |">
+    <div class="card" th:each="i: ${items}">
+<!--         th:onclick="| location.href= '/detail/' + ${i.id} |">-->
         <img src="https://placehold.co/300">
         <div>
-            <h4 th:text="${i.title}"></h4>
+            <a th:href="@{'/detail/'+${i.id}}"><h4 th:text="${i.title}"></h4></a>
             <p th:text="${i.price + '원'}"></p>
             <a th:href="@{'/edit/'+${i.id}}">✏️</a>
+            <span th:onclick="fetch('/item?id=[[${i.id}]]', {method : 'DELETE'})
+                .then(r => r.text())
+                .then((a) => {
+                    console.log(a);
+                    location.reload();
+                })
+                ">🗑️
+            </span>
         </div>
     </div>
-
 </body>
 </html>
