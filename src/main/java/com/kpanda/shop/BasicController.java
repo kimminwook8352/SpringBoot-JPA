@@ -25,19 +25,15 @@ public class BasicController {
         return "list";
     }
 
+
+
     @GetMapping("/about")
     @ResponseBody
     String about(){
         return "피싱사이트";
     }
 
-    @GetMapping("/mypage")
-    @ResponseBody
-    String myPage(){
-        return "내정보";
-    }
-
-    @GetMapping("/date")
+     @GetMapping("/date")
     @ResponseBody
     String date(){
 //        return LocalDateTime.now().toString();

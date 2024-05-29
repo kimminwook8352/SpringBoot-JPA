@@ -2,7 +2,10 @@
 
 <div class="nav" th:fragment="navbar">
     <a class="logo">SpringMall</a>
-
+<!--    <p><span sec:authentication="principal.username"></span>&nbsp;&nbsp;</p>-->
     <p><a th:href="@{'/list'}">List</a></p>
     <p><a th:href="@{'/write'}">Write</a></p>
+    <div sec:authorize="isAuthenticated()">
+        <a href="/logout">로그아웃</a>
+    </div>
 </div>

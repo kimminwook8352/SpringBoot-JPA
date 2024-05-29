@@ -1,12 +1,15 @@
 package com.kpanda.shop.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +19,7 @@ public class ItemController
 {
     private final ItemRepository itemRepository;
     private final ItemService itemService;
+    private final S3Service s3Service;
 
     @GetMapping("/list")
     String list(Model model){
@@ -85,10 +89,23 @@ public class ItemController
         itemService.saveItem(title, price);
         return "redirect:/list";
     }
-    //간단하게 사용할수 있음
-//    String writePost(@ModelAttribute Item item){
-//        itemRepository.save(item);
-//        return "redirect:/list";
-//    }
+
+    @GetMapping("/list/page/{abc}")
+    String getListPage(Model model, @PathVariable Integer abc){
+        Page<Item> result = itemRepository.findPageBy(PageRequest.of(abc-1,5));
+
+        System.out.println(result.getTotalPages());
+        System.out.println(result.hasNext());
+        model.addAttribute("items", result);
+        return "list.html";
+    }
+
+    @GetMapping("/presigned-url")
+    @ResponseBody
+    String getURL(@RequestParam String filename){
+        var result = s3Service.createPresignedUrl("test/" + filename);
+        System.out.println(result);
+        return result;
+    }
 
 }

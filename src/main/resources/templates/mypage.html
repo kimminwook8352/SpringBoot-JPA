@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="/main.css" rel="stylesheet">
+
+</head>
+<body>
+<div th:replace ="~{ nav.html::navbar }"></div>
+<h4>마이페이지임</h4>
+<span sec:authentication="principal"></span>
+<span sec:authentication="principal.username"></span>
+<span sec:authentication="principal.authorities"></span>
+<!--<span sec:authentication="hasAuthority('일반유저')">-->
+<!--    특정권한 보여주소-->
+<!--</span>-->
+
+<div sec:authorize="isAuthenticated()">
+    로그인 사람 보여주소
+</div>
+
+</body>
+</html>
