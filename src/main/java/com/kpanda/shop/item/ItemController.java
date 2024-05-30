@@ -1,5 +1,6 @@
 package com.kpanda.shop.item;
 
+import com.kpanda.shop.comment.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,8 +19,9 @@ import java.util.Optional;
 public class ItemController
 {
     private final ItemRepository itemRepository;
+    private final CommentRepository commentRepository;
     private final ItemService itemService;
-    private final S3Service s3Service;
+
 
     @GetMapping("/list")
     String list(Model model){
@@ -30,6 +32,8 @@ public class ItemController
 
     @GetMapping("/detail/{id}")
     String detail(@PathVariable Long id,Model model){
+        var res = commentRepository.findAllByParentId(id);
+
         Optional<Item> result = itemRepository.findById(id);
         if(result.isPresent()){
             model.addAttribute("item",result.get());
@@ -100,12 +104,9 @@ public class ItemController
         return "list.html";
     }
 
-    @GetMapping("/presigned-url")
-    @ResponseBody
-    String getURL(@RequestParam String filename){
-        var result = s3Service.createPresignedUrl("test/" + filename);
-        System.out.println(result);
-        return result;
-    }
+
+
+
+
 
 }
