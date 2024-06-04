@@ -103,10 +103,4 @@ public class ItemController
         model.addAttribute("items", result);
         return "list.html";
     }
-
-
-
-
-
-
 }
